@@ -174,7 +174,7 @@ EOXML;
   }
 
   /**
-   * Function batchProcess.
+   * Function getDc.
    */
   protected function getDc() {
     if (!isset($this['DC'])) {
@@ -184,25 +184,21 @@ EOXML;
       $dc_datastream->label = 'DC Record';
 
       // Get the DC by transforming from MODS.
-      if (!isset($dc_datastream->content)) {
-        // XXX: Might want to make this use a file, instead of staging the DC
-        // in the database table (inside the object we serialize).
-        $new_dc = static::runXslTransform(array(
-          'xsl' => drupal_get_path('module', 'islandora_batch') . '/transforms/mods_to_dc.xsl',
-          'input' => $this->getMods(),
-        ));
-        if ($new_dc) {
-          $dc_datastream->content = $new_dc;
-        }
-      }
-
-      if (isset($dc_datastream->content)) {
+      $new_dc = static::runXslTransform(array(
+        'xsl' => drupal_get_path('module', 'islandora_batch') . '/transforms/mods_to_dc.xsl',
+        'input' => $this->getMods(),
+      ));
+      if ($new_dc) {
+        $dc_datastream->content = $new_dc;
         $this->ingestDatastream($dc_datastream);
       }
+      else {
+        throw new Exception('Failed to transform MODS to DC.');
+      }
     }
-
     return $this['DC']->content;
   }
+
 }
 
 /**
