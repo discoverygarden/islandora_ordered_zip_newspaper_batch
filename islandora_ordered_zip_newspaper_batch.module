@@ -10,7 +10,7 @@
 function islandora_ordered_zip_newspaper_batch_menu() {
   $items = array();
 
-  $items['islandora/object/%islandora_object/manage/newspaper_batch'] = array(
+  $items['islandora/object/%islandora_object/manage/ordered_newspaper_batch'] = array(
     'title' => 'Add Zipped Issues',
     'access callback' => 'islandora_ordered_zip_newspaper_batch_menu_access',
     'access arguments' => array(2),
