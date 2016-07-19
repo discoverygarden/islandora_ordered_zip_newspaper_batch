@@ -41,7 +41,11 @@ class IslandoraOrderedNewspaperBatch extends IslandoraNewspaperBatch {
       // Avoid creating entries for directories and some weird Mac stuff...
       // XXX: Should be made to take the pattern from
       // $this::getPattern(), and to filter the results based on it.
-      if (isset($path_info['extension']) && strpos($path_info['dirname'], '__MACOSX') === FALSE && $path_info['extension'] != 'DS_Store') {
+      $extensions_to_skip = drupal_map_assoc(array(
+        'DS_Store',
+        'db',
+      ));
+      if (isset($path_info['extension']) && strpos($path_info['dirname'], '__MACOSX') === FALSE && !isset($extensions_to_skip[$path_info['extension']])) {
         $file_entry = new stdClass();
         $file_entry->uri = "zip://$zip_file#$raw_name";
         $file_entry->filename = $path_info['basename'];
@@ -155,7 +159,7 @@ class IslandoraOrderedNewspaperIssueBatchObject extends IslandoraNewspaperIssueB
       if (isset($this->objectInfo['MODS'])) {
         $mods_datastream->setContentFromFile($this->objectInfo['MODS']->uri, FALSE);
       }
-      if (!isset($mods_datastream->content)) {
+      else {
         // If we do not yet have any XML, create a dumb MODS with just the
         // title, and set it...
         $title = $this->baseName;
