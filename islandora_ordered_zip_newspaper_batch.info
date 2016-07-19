@@ -1,0 +1,9 @@
+name = Islandora Ordered Newspaper Batch
+description = "Batch ingest newspaper issue and page objects based around ordering in a ZIP."
+package = Islandora
+core = 7.x
+dependencies[] = islandora_batch
+dependencies[] = islandora_newspaper
+dependencies[] = islandora_newspaper_batch
+files[] = includes/islandora_ordered_zip_newspaper_batch.inc
+php = 5.3
