@@ -46,7 +46,7 @@ would result in a two-page newspaper issue.
     * otherimage.jp2
     * lastthing.tiff
 
-Note that there is no ordering be dictating here by a file naming pattern and relies upon the order to which the image files were added to the ZIP.
+Note that the sequence is based upon the ordering of files within a zip file and is not dictated by file naming, it is ZIP implementation specific.
 
 The queue of preprocessed items can then be processed:
 
